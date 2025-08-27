@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Fun for Kids - YouTube Edition</title>
+    <title>Math Fun for Kids</title>
     <style>
         * {
             margin: 0;
@@ -20,13 +20,6 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-        }
-        
-        .youtube-header {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #ff0000;
-            font-size: 1.5rem;
         }
         
         .game-container {
@@ -192,15 +185,6 @@
             color: #bbdefb;
         }
         
-        .youtube-cta {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #ff0000;
-            color: white;
-            border-radius: 10px;
-            font-size: 1.2rem;
-        }
-        
         @media (max-width: 600px) {
             .options-container {
                 grid-template-columns: 1fr;
@@ -217,11 +201,6 @@
     </style>
 </head>
 <body>
-    <div class="youtube-header">
-        <h2>🎮 Math Game for Kids - Play Now! 🎮</h2>
-        <p>Like this game? Subscribe to our channel for more educational content!</p>
-    </div>
-    
     <div class="game-container">
         <button class="sound-control" id="soundToggle">🔊</button>
         
@@ -256,10 +235,6 @@
                 Level 4: All Operations
                 <div class="level-desc">Numbers 1-12</div>
             </button>
-            
-            <div class="youtube-cta">
-                Enjoying this game? Check out our YouTube channel for more fun educational content!
-            </div>
         </div>
         
         <!-- Game Screen -->
@@ -287,33 +262,15 @@
             <div class="message" id="resultMessage"></div>
             
             <button class="btn" id="playAgainBtn">Play Again</button>
-            
-            <div class="youtube-cta">
-                Did you enjoy this game? Subscribe to our channel for more learning games!
-            </div>
         </div>
     </div>
 
-    <!-- Audio elements for sound effects with base64 encoded fallbacks -->
-    <audio id="correctSound">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" type="audio/mpeg">
-    </audio>
-    
-    <audio id="wrongSound">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" type="audio/mpeg">
-    </audio>
-    
-    <audio id="levelUpSound">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
-    </audio>
-    
-    <audio id="gameOverSound">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-game-over-470.mp3" type="audio/mpeg">
-    </audio>
-    
-    <audio id="clickSound">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Audio elements for sound effects -->
+    <audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+    <audio id="wrongSound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"></audio>
+    <audio id="levelUpSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+    <audio id="gameOverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-game-over-470.mp3"></audio>
+    <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3"></audio>
 
     <script>
         // Game variables
@@ -369,35 +326,7 @@
             soundToggle.addEventListener('click', () => {
                 soundEnabled = !soundEnabled;
                 soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
-                // Save preference to localStorage
-                localStorage.setItem('mathGameSoundEnabled', soundEnabled);
             });
-            
-            // Load sound preference from localStorage if available
-            const savedSoundPreference = localStorage.getItem('mathGameSoundEnabled');
-            if (savedSoundPreference !== null) {
-                soundEnabled = savedSoundPreference === 'true';
-                soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
-            }
-            
-            // Preload audio files
-            preloadAudio();
-        }
-        
-        // Preload audio files to prevent delay on first play
-        function preloadAudio() {
-            correctSound.volume = 0.7;
-            wrongSound.volume = 0.7;
-            levelUpSound.volume = 0.7;
-            gameOverSound.volume = 0.7;
-            clickSound.volume = 0.7;
-            
-            // Load and pause to preload
-            correctSound.load();
-            wrongSound.load();
-            levelUpSound.load();
-            gameOverSound.load();
-            clickSound.load();
         }
         
         // Start the game
@@ -513,7 +442,6 @@
             // Disable option buttons after selection
             document.querySelectorAll('.option-btn').forEach(btn => {
                 btn.disabled = true;
-                btn.style.cursor = 'not-allowed';
             });
             
             if (selectedAnswer === correctAnswer) {
@@ -573,19 +501,8 @@
         function playSound(sound) {
             if (soundEnabled) {
                 sound.currentTime = 0;
-                sound.play().catch(e => {
-                    console.log("Audio play failed:", e);
-                    // Fallback to embedded audio if external files fail
-                    playFallbackSound(sound.id);
-                });
+                sound.play().catch(e => console.log("Audio play failed:", e));
             }
-        }
-        
-        // Fallback sound function using base64 encoded audio
-        function playFallbackSound(soundId) {
-            // This would be where we'd use base64 encoded audio as fallback
-            // For now, we'll just log the issue
-            console.log("Using fallback for:", soundId);
         }
         
         // Initialize the game when the page loads
