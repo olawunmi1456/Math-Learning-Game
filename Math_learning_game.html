@@ -178,11 +178,34 @@
             position: absolute;
             z-index: -1;
             opacity: 0.2;
-        }
-        
-        .math-symbol {
             font-size: 5rem;
             color: #bbdefb;
+        }
+        
+        .decoration-1 {
+            top: 50px;
+            left: 50px;
+        }
+        
+        .decoration-2 {
+            top: 150px;
+            right: 70px;
+        }
+        
+        .decoration-3 {
+            bottom: 100px;
+            left: 80px;
+        }
+        
+        .decoration-4 {
+            bottom: 150px;
+            right: 60px;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #616161;
         }
         
         @media (max-width: 600px) {
@@ -197,6 +220,30 @@
             .question {
                 font-size: 1.8rem;
             }
+            
+            .decoration {
+                font-size: 3rem;
+            }
+            
+            .decoration-1 {
+                top: 30px;
+                left: 30px;
+            }
+            
+            .decoration-2 {
+                top: 100px;
+                right: 40px;
+            }
+            
+            .decoration-3 {
+                bottom: 70px;
+                left: 50px;
+            }
+            
+            .decoration-4 {
+                bottom: 100px;
+                right: 40px;
+            }
         }
     </style>
 </head>
@@ -204,15 +251,15 @@
     <div class="game-container">
         <button class="sound-control" id="soundToggle">🔊</button>
         
-        <div class="decoration" style="top: 50px; left: 50px;">➕</div>
-        <div class="decoration" style="top: 150px; right: 70px;">➖</div>
-        <div class="decoration" style="bottom: 100px; left: 80px;">✖️</div>
-        <div class="decoration" style="bottom: 150px; right: 60px;">➗</div>
+        <div class="decoration decoration-1">➕</div>
+        <div class="decoration decoration-2">➖</div>
+        <div class="decoration decoration-3">✖️</div>
+        <div class="decoration decoration-4">➗</div>
         
         <!-- Menu Screen -->
         <div id="menuScreen" class="screen active">
             <h1 class="game-title">Math Fun for Kids</h1>
-            <p style="font-size: 1.2rem; margin-bottom: 30px; color: #616161;">
+            <p class="intro-text">
                 Select a difficulty level to start playing!
             </p>
             
@@ -265,24 +312,24 @@
         </div>
     </div>
 
-    <!-- Audio elements for sound effects with base64 encoded fallbacks -->
-    <audio id="correctSound">
+    <!-- Audio elements for sound effects -->
+    <audio id="correctSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" type="audio/mpeg">
     </audio>
     
-    <audio id="wrongSound">
+    <audio id="wrongSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" type="audio/mpeg">
     </audio>
     
-    <audio id="levelUpSound">
+    <audio id="levelUpSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
     </audio>
     
-    <audio id="gameOverSound">
+    <audio id="gameOverSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-game-over-470.mp3" type="audio/mpeg">
     </audio>
     
-    <audio id="clickSound">
+    <audio id="clickSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
     </audio>
 
@@ -543,24 +590,31 @@
         // Play a sound if enabled
         function playSound(sound) {
             if (soundEnabled) {
-                sound.currentTime = 0;
-                sound.play().catch(e => {
-                    console.log("Audio play failed:", e);
-                    // Fallback to embedded audio if external files fail
-                    playFallbackSound(sound.id);
-                });
+                try {
+                    sound.currentTime = 0;
+                    const playPromise = sound.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            console.log("Audio play failed:", error);
+                            // Try to handle the autoplay restriction
+                            if (error.name === 'NotAllowedError') {
+                                // User interaction is needed to play audio
+                                document.addEventListener('click', function userInteraction() {
+                                    sound.play().catch(e => console.log("Still can't play audio:", e));
+                                    document.removeEventListener('click', userInteraction);
+                                }, { once: true });
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error playing sound:", error);
+                }
             }
         }
         
-        // Fallback sound function using base64 encoded audio
-        function playFallbackSound(soundId) {
-            // This would be where we'd use base64 encoded audio as fallback
-            // For now, we'll just log the issue
-            console.log("Using fallback for:", soundId);
-        }
-        
         // Initialize the game when the page loads
-        window.onload = init;
+        window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
