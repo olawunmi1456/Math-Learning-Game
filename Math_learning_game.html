@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Fun for Kids - Enhanced</title>
+    <title>Math Fun for Kids</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -247,11 +247,28 @@
             position: absolute;
             z-index: -1;
             opacity: 0.2;
-        }
-        
-        .math-symbol {
             font-size: 5rem;
             color: #bbdefb;
+        }
+        
+        .decoration-1 {
+            top: 50px;
+            left: 50px;
+        }
+        
+        .decoration-2 {
+            top: 150px;
+            right: 70px;
+        }
+        
+        .decoration-3 {
+            bottom: 100px;
+            left: 80px;
+        }
+        
+        .decoration-4 {
+            bottom: 150px;
+            right: 60px;
         }
         
         .character {
@@ -489,6 +506,49 @@
             color: #4527a0;
         }
         
+        .menu-description {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #616161;
+        }
+        
+        .menu-buttons {
+            margin-top: 30px;
+        }
+        
+        .math-object-operation {
+            font-size: 2.5rem;
+        }
+        
+        .instruction-item {
+            margin: 15px 0;
+            font-size: 1.2rem;
+        }
+        
+        .instruction-icon {
+            color: #4caf50;
+        }
+        
+        .progress-30 {
+            width: 30%;
+        }
+        
+        .progress-60 {
+            width: 60%;
+        }
+        
+        .progress-80 {
+            width: 80%;
+        }
+        
+        .progress-45 {
+            width: 45%;
+        }
+        
+        .progress-70 {
+            width: 70%;
+        }
+        
         @media (max-width: 600px) {
             .options-container {
                 grid-template-columns: 1fr;
@@ -525,6 +585,10 @@
             .report-stats {
                 grid-template-columns: 1fr;
             }
+            
+            .decoration {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -537,17 +601,17 @@
             <div class="timer" id="timer">60</div>
         </div>
         
-        <div class="decoration" style="top: 50px; left: 50px;">➕</div>
-        <div class="decoration" style="top: 150px; right: 70px;">➖</div>
-        <div class="decoration" style="bottom: 100px; left: 80px;">✖️</div>
-        <div class="decoration" style="bottom: 150px; right: 60px;">➗</div>
+        <div class="decoration decoration-1">➕</div>
+        <div class="decoration decoration-2">➖</div>
+        <div class="decoration decoration-3">✖️</div>
+        <div class="decoration decoration-4">➗</div>
         
         <div class="character" id="character">👦</div>
         
         <!-- Menu Screen -->
         <div id="menuScreen" class="screen active">
             <h1 class="game-title">Math Fun for Kids</h1>
-            <p style="font-size: 1.2rem; margin-bottom: 30px; color: #616161;">
+            <p class="menu-description">
                 Select a difficulty level to start playing!
             </p>
             
@@ -571,7 +635,7 @@
                 <div class="level-desc">Numbers 1-12</div>
             </button>
             
-            <div style="margin-top: 30px;">
+            <div class="menu-buttons">
                 <button class="btn" id="instructionsBtn">
                     <i class="fas fa-info-circle"></i> How to Play
                 </button>
@@ -590,7 +654,7 @@
             
             <div class="customization-panel">
                 <h3>Choose Your Character</h3>
-                <div style="margin: 15px 0;">
+                <div class="avatar-options">
                     <span class="avatar-option active" data-avatar="👦">👦</span>
                     <span class="avatar-option" data-avatar="👧">👧</span>
                     <span class="avatar-option" data-avatar="🦁">🦁</span>
@@ -599,12 +663,12 @@
                 </div>
                 
                 <h3>Choose Theme Color</h3>
-                <div style="margin: 15px 0;">
-                    <span class="color-option active" style="background-color: #42a5f5;" data-color="#42a5f5"></span>
-                    <span class="color-option" style="background-color: #f44336;" data-color="#f44336"></span>
-                    <span class="color-option" style="background-color: #4caf50;" data-color="#4caf50"></span>
-                    <span class="color-option" style="background-color: #ff9800;" data-color="#ff9800"></span>
-                    <span class="color-option" style="background-color: #9c27b0;" data-color="#9c27b0"></span>
+                <div class="color-options">
+                    <span class="color-option active" data-color="#42a5f5"></span>
+                    <span class="color-option" data-color="#f44336"></span>
+                    <span class="color-option" data-color="#4caf50"></span>
+                    <span class="color-option" data-color="#ff9800"></span>
+                    <span class="color-option" data-color="#9c27b0"></span>
                 </div>
             </div>
             
@@ -620,7 +684,7 @@
             <div class="reward-badge">
                 <i class="fas fa-trophy"></i>
             </div>
-            <p style="font-size: 1.2rem; margin: 10px 0;">
+            <p class="menu-description">
                 Total Stars: <span id="totalStars">0</span>
             </p>
             
@@ -628,8 +692,8 @@
                 <div class="challenge-title">Weekly Challenge</div>
                 <div class="challenge-desc">Solve 50 math problems this week</div>
                 <div class="challenge-progress">
-                    <div class="progress-container" style="width: 70%;">
-                        <div class="progress-bar" style="width: 30%;"></div>
+                    <div class="progress-container progress-70">
+                        <div class="progress-bar progress-30"></div>
                     </div>
                     <div class="challenge-status">15/50</div>
                 </div>
@@ -640,7 +704,7 @@
                     <div class="reward-icon">🏆</div>
                     <div class="reward-name">Math Master</div>
                     <div class="reward-progress">
-                        <div class="reward-progress-bar" style="width: 60%;"></div>
+                        <div class="reward-progress-bar progress-60"></div>
                     </div>
                 </div>
                 
@@ -648,7 +712,7 @@
                     <div class="reward-icon">⚡</div>
                     <div class="reward-name">Speedster</div>
                     <div class="reward-progress">
-                        <div class="reward-progress-bar" style="width: 30%;"></div>
+                        <div class="reward-progress-bar progress-30"></div>
                     </div>
                 </div>
                 
@@ -656,7 +720,7 @@
                     <div class="reward-icon">🔢</div>
                     <div class="reward-name">Number Ninja</div>
                     <div class="reward-progress">
-                        <div class="reward-progress-bar" style="width: 80%;"></div>
+                        <div class="reward-progress-bar progress-80"></div>
                     </div>
                 </div>
                 
@@ -664,7 +728,7 @@
                     <div class="reward-icon">🌟</div>
                     <div class="reward-name">Star Collector</div>
                     <div class="reward-progress">
-                        <div class="reward-progress-bar" style="width: 45%;"></div>
+                        <div class="reward-progress-bar progress-45"></div>
                     </div>
                 </div>
             </div>
@@ -678,25 +742,25 @@
         <div id="instructionsScreen" class="screen">
             <h2 class="game-title">How to Play</h2>
             
-            <div style="text-align: left; margin: 20px 0;">
-                <p style="margin: 15px 0; font-size: 1.2rem;">
-                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+            <div class="instruction-list">
+                <p class="instruction-item">
+                    <i class="fas fa-check-circle instruction-icon"></i> 
                     Select a difficulty level to start the game
                 </p>
-                <p style="margin: 15px 0; font-size: 1.2rem;">
-                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+                <p class="instruction-item">
+                    <i class="fas fa-check-circle instruction-icon"></i> 
                     Solve math problems by clicking on the correct answer
                 </p>
-                <p style="margin: 15px 0; font-size: 1.2rem;">
-                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+                <p class="instruction-item">
+                    <i class="fas fa-check-circle instruction-icon"></i> 
                     Earn stars for correct answers
                 </p>
-                <p style="margin: 15px 0; font-size: 1.2rem;">
-                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+                <p class="instruction-item">
+                    <i class="fas fa-check-circle instruction-icon"></i> 
                     Use hints if you get stuck (limited to 3 per game)
                 </p>
-                <p style="margin: 15px 0; font-size: 1.2rem;">
-                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+                <p class="instruction-item">
+                    <i class="fas fa-check-circle instruction-icon"></i> 
                     Complete before the timer runs out for bonus points!
                 </p>
             </div>
@@ -1131,9 +1195,8 @@
             
             // Add operation symbol
             const opElem = document.createElement('div');
-            opElem.className = 'math-object';
+            opElem.className = 'math-object math-object-operation';
             opElem.textContent = opSymbols[operation];
-            opElem.style.fontSize = '2.5rem';
             visualMath.appendChild(opElem);
             
             // Create visual elements for the second number
@@ -1146,16 +1209,14 @@
             
             // Add equals sign
             const equalsElem = document.createElement('div');
-            equalsElem.className = 'math-object';
+            equalsElem.className = 'math-object math-object-operation';
             equalsElem.textContent = '=';
-            equalsElem.style.fontSize = '2.5rem';
             visualMath.appendChild(equalsElem);
             
             // Add question mark
             const questionElem = document.createElement('div');
-            questionElem.className = 'math-object';
+            questionElem.className = 'math-object math-object-operation';
             questionElem.textContent = '?';
-            questionElem.style.fontSize = '2.5rem';
             visualMath.appendChild(questionElem);
         }
         
