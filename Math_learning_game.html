@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Fun for Kids</title>
+    <title>Math Fun for Kids - Enhanced</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -80,6 +81,8 @@
             text-align: center;
             display: block;
             margin: 15px auto;
+            position: relative;
+            overflow: hidden;
         }
         
         .level-desc {
@@ -92,6 +95,24 @@
             font-size: 2.2rem;
             margin: 30px 0;
             color: #333;
+        }
+        
+        .visual-math {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .math-object {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
         }
         
         .options-container {
@@ -109,6 +130,8 @@
             border-radius: 15px;
             cursor: pointer;
             transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
         }
         
         .option-btn:hover {
@@ -120,6 +143,36 @@
             font-size: 1.4rem;
             margin: 20px 0;
             color: #424242;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .stars-container {
+            display: flex;
+            margin-left: 10px;
+        }
+        
+        .star {
+            color: #ffd700;
+            font-size: 1.8rem;
+            margin: 0 2px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #e3f2fd;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: #42a5f5;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
         }
         
         .feedback {
@@ -174,38 +227,266 @@
             color: #42a5f5;
         }
         
+        .timer-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            color: #424242;
+        }
+        
+        .timer {
+            margin-left: 10px;
+            font-weight: bold;
+            color: #1565c0;
+        }
+        
         .decoration {
             position: absolute;
             z-index: -1;
             opacity: 0.2;
+        }
+        
+        .math-symbol {
             font-size: 5rem;
             color: #bbdefb;
         }
         
-        .decoration-1 {
-            top: 50px;
-            left: 50px;
+        .character {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 4rem;
+            transition: transform 0.3s;
         }
         
-        .decoration-2 {
-            top: 150px;
-            right: 70px;
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
-        .decoration-3 {
-            bottom: 100px;
-            left: 80px;
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f44336;
+            opacity: 0.8;
         }
         
-        .decoration-4 {
-            bottom: 150px;
-            right: 60px;
+        .hint-btn {
+            background-color: #ff9800;
+            margin-top: 10px;
         }
         
-        .intro-text {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+        .hint-container {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #fff3e0;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .achievement-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ffd700;
+            color: #7b5e0d;
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateX(100%);
+            transition: transform 0.5s;
+            z-index: 1000;
+        }
+        
+        .badge-show {
+            transform: translateX(0);
+        }
+        
+        .customization-panel {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .color-option.active {
+            border: 2px solid #333;
+        }
+        
+        .avatar-option {
+            font-size: 2rem;
+            margin: 0 10px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+        }
+        
+        .avatar-option.active {
+            border: 2px solid #42a5f5;
+            background-color: #bbdefb;
+        }
+        
+        .story-container {
+            background-color: #fff9c4;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        .reward-badge {
+            width: 80px;
+            height: 80px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
+            font-size: 2.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .reward-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .reward-item {
+            background-color: #e3f2fd;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            width: 100px;
+        }
+        
+        .reward-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .reward-name {
+            font-size: 0.9rem;
+        }
+        
+        .reward-progress {
+            height: 5px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .reward-progress-bar {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0%;
+        }
+        
+        .challenge-container {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .challenge-title {
+            color: #2e7d32;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .challenge-desc {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .challenge-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .challenge-status {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #388e3c;
+        }
+        
+        .parent-report {
+            background-color: #f3e5f5;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .report-title {
+            color: #7b1fa2;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .report-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .stat-item {
+            padding: 10px;
+            background-color: #ede7f6;
+            border-radius: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
             color: #616161;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4527a0;
         }
         
         @media (max-width: 600px) {
@@ -221,28 +502,28 @@
                 font-size: 1.8rem;
             }
             
-            .decoration {
-                font-size: 3rem;
+            .btn-level {
+                width: 100%;
+                padding: 12px 20px;
             }
             
-            .decoration-1 {
-                top: 30px;
-                left: 30px;
+            .character {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                margin-top: 20px;
             }
             
-            .decoration-2 {
-                top: 100px;
-                right: 40px;
+            .timer-container {
+                position: relative;
+                top: 0;
+                left: 0;
+                justify-content: center;
+                margin-bottom: 15px;
             }
             
-            .decoration-3 {
-                bottom: 70px;
-                left: 50px;
-            }
-            
-            .decoration-4 {
-                bottom: 100px;
-                right: 40px;
+            .report-stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -251,15 +532,22 @@
     <div class="game-container">
         <button class="sound-control" id="soundToggle">🔊</button>
         
-        <div class="decoration decoration-1">➕</div>
-        <div class="decoration decoration-2">➖</div>
-        <div class="decoration decoration-3">✖️</div>
-        <div class="decoration decoration-4">➗</div>
+        <div class="timer-container">
+            <i class="fas fa-clock"></i>
+            <div class="timer" id="timer">60</div>
+        </div>
+        
+        <div class="decoration" style="top: 50px; left: 50px;">➕</div>
+        <div class="decoration" style="top: 150px; right: 70px;">➖</div>
+        <div class="decoration" style="bottom: 100px; left: 80px;">✖️</div>
+        <div class="decoration" style="bottom: 150px; right: 60px;">➗</div>
+        
+        <div class="character" id="character">👦</div>
         
         <!-- Menu Screen -->
         <div id="menuScreen" class="screen active">
             <h1 class="game-title">Math Fun for Kids</h1>
-            <p class="intro-text">
+            <p style="font-size: 1.2rem; margin-bottom: 30px; color: #616161;">
                 Select a difficulty level to start playing!
             </p>
             
@@ -282,18 +570,171 @@
                 Level 4: All Operations
                 <div class="level-desc">Numbers 1-12</div>
             </button>
+            
+            <div style="margin-top: 30px;">
+                <button class="btn" id="instructionsBtn">
+                    <i class="fas fa-info-circle"></i> How to Play
+                </button>
+                <button class="btn" id="customizeBtn">
+                    <i class="fas fa-paint-brush"></i> Customize
+                </button>
+                <button class="btn" id="rewardsBtn">
+                    <i class="fas fa-trophy"></i> Rewards
+                </button>
+            </div>
+        </div>
+        
+        <!-- Customization Screen -->
+        <div id="customizeScreen" class="screen">
+            <h2 class="game-title">Customize Your Game</h2>
+            
+            <div class="customization-panel">
+                <h3>Choose Your Character</h3>
+                <div style="margin: 15px 0;">
+                    <span class="avatar-option active" data-avatar="👦">👦</span>
+                    <span class="avatar-option" data-avatar="👧">👧</span>
+                    <span class="avatar-option" data-avatar="🦁">🦁</span>
+                    <span class="avatar-option" data-avatar="🐰">🐰</span>
+                    <span class="avatar-option" data-avatar="🐶">🐶</span>
+                </div>
+                
+                <h3>Choose Theme Color</h3>
+                <div style="margin: 15px 0;">
+                    <span class="color-option active" style="background-color: #42a5f5;" data-color="#42a5f5"></span>
+                    <span class="color-option" style="background-color: #f44336;" data-color="#f44336"></span>
+                    <span class="color-option" style="background-color: #4caf50;" data-color="#4caf50"></span>
+                    <span class="color-option" style="background-color: #ff9800;" data-color="#ff9800"></span>
+                    <span class="color-option" style="background-color: #9c27b0;" data-color="#9c27b0"></span>
+                </div>
+            </div>
+            
+            <button class="btn" id="backToMenuBtn">
+                <i class="fas fa-arrow-left"></i> Back to Menu
+            </button>
+        </div>
+        
+        <!-- Rewards Screen -->
+        <div id="rewardsScreen" class="screen">
+            <h2 class="game-title">Your Rewards</h2>
+            
+            <div class="reward-badge">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <p style="font-size: 1.2rem; margin: 10px 0;">
+                Total Stars: <span id="totalStars">0</span>
+            </p>
+            
+            <div class="challenge-container">
+                <div class="challenge-title">Weekly Challenge</div>
+                <div class="challenge-desc">Solve 50 math problems this week</div>
+                <div class="challenge-progress">
+                    <div class="progress-container" style="width: 70%;">
+                        <div class="progress-bar" style="width: 30%;"></div>
+                    </div>
+                    <div class="challenge-status">15/50</div>
+                </div>
+            </div>
+            
+            <div class="reward-container">
+                <div class="reward-item">
+                    <div class="reward-icon">🏆</div>
+                    <div class="reward-name">Math Master</div>
+                    <div class="reward-progress">
+                        <div class="reward-progress-bar" style="width: 60%;"></div>
+                    </div>
+                </div>
+                
+                <div class="reward-item">
+                    <div class="reward-icon">⚡</div>
+                    <div class="reward-name">Speedster</div>
+                    <div class="reward-progress">
+                        <div class="reward-progress-bar" style="width: 30%;"></div>
+                    </div>
+                </div>
+                
+                <div class="reward-item">
+                    <div class="reward-icon">🔢</div>
+                    <div class="reward-name">Number Ninja</div>
+                    <div class="reward-progress">
+                        <div class="reward-progress-bar" style="width: 80%;"></div>
+                    </div>
+                </div>
+                
+                <div class="reward-item">
+                    <div class="reward-icon">🌟</div>
+                    <div class="reward-name">Star Collector</div>
+                    <div class="reward-progress">
+                        <div class="reward-progress-bar" style="width: 45%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn" id="backToMenuBtn2">
+                <i class="fas fa-arrow-left"></i> Back to Menu
+            </button>
+        </div>
+        
+        <!-- Instructions Screen -->
+        <div id="instructionsScreen" class="screen">
+            <h2 class="game-title">How to Play</h2>
+            
+            <div style="text-align: left; margin: 20px 0;">
+                <p style="margin: 15px 0; font-size: 1.2rem;">
+                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+                    Select a difficulty level to start the game
+                </p>
+                <p style="margin: 15px 0; font-size: 1.2rem;">
+                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+                    Solve math problems by clicking on the correct answer
+                </p>
+                <p style="margin: 15px 0; font-size: 1.2rem;">
+                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+                    Earn stars for correct answers
+                </p>
+                <p style="margin: 15px 0; font-size: 1.2rem;">
+                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+                    Use hints if you get stuck (limited to 3 per game)
+                </p>
+                <p style="margin: 15px 0; font-size: 1.2rem;">
+                    <i class="fas fa-check-circle" style="color: #4caf50;"></i> 
+                    Complete before the timer runs out for bonus points!
+                </p>
+            </div>
+            
+            <div class="story-container">
+                <h3>Math Adventure Story</h3>
+                <p class="story-text">
+                    Join Mathy the Monkey on an adventure through Number Jungle! Solve math problems to help Mathy collect bananas and unlock new areas of the jungle. Each correct answer brings you closer to discovering the Ancient Math Temple!
+                </p>
+            </div>
+            
+            <button class="btn" id="backToMenuBtn3">
+                <i class="fas fa-arrow-left"></i> Back to Menu
+            </button>
         </div>
         
         <!-- Game Screen -->
         <div id="gameScreen" class="screen">
             <div class="score-display">
-                Score: <span id="score">0</span>/<span id="totalQuestions">10</span> | 
-                Level: <span id="currentLevel">1</span>
+                Score: <span id="score">0</span>/<span id="totalQuestions">10</span>
+                <div class="stars-container" id="starsContainer"></div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
             </div>
             
             <div class="question" id="questionText"></div>
             
+            <div class="visual-math" id="visualMath"></div>
+            
             <div class="options-container" id="optionsContainer"></div>
+            
+            <button class="btn hint-btn" id="hintBtn">
+                <i class="fas fa-lightbulb"></i> Hint (<span id="hintCount">3</span> left)
+            </button>
+            
+            <div class="hint-container" id="hintContainer"></div>
             
             <div id="feedback" class="feedback"></div>
         </div>
@@ -306,11 +747,47 @@
                 Your score: <span id="finalScore">0</span>/10
             </div>
             
+            <div class="score-display">
+                Stars earned: 
+                <div class="stars-container" id="finalStars"></div>
+            </div>
+            
             <div class="message" id="resultMessage"></div>
             
-            <button class="btn" id="playAgainBtn">Play Again</button>
+            <div class="parent-report">
+                <div class="report-title">Progress Report</div>
+                <div class="report-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Correct Answers</div>
+                        <div class="stat-value" id="statCorrect">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Time Spent</div>
+                        <div class="stat-value" id="statTime">0s</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Hints Used</div>
+                        <div class="stat-value" id="statHints">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Stars Earned</div>
+                        <div class="stat-value" id="statStars">0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn" id="playAgainBtn">
+                <i class="fas fa-redo"></i> Play Again
+            </button>
+            
+            <button class="btn" id="menuBtn">
+                <i class="fas fa-home"></i> Main Menu
+            </button>
         </div>
     </div>
+
+    <div class="celebration" id="celebration"></div>
+    <div class="achievement-badge" id="achievementBadge">New Achievement!</div>
 
     <!-- Audio elements for sound effects -->
     <audio id="correctSound" preload="auto">
@@ -332,6 +809,10 @@
     <audio id="clickSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
     </audio>
+    
+    <audio id="celebrationSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         // Game variables
@@ -342,20 +823,49 @@
         let correctAnswer;
         let options = [];
         let soundEnabled = true;
+        let timer;
+        let timeLeft = 60;
+        let hintsLeft = 3;
+        let stars = 0;
+        let totalStars = 0;
+        let startTime;
+        let achievements = {
+            perfectScore: false,
+            speedRun: false,
+            noHintsUsed: false
+        };
         
         // DOM elements
         const menuScreen = document.getElementById('menuScreen');
+        const instructionsScreen = document.getElementById('instructionsScreen');
+        const customizeScreen = document.getElementById('customizeScreen');
+        const rewardsScreen = document.getElementById('rewardsScreen');
         const gameScreen = document.getElementById('gameScreen');
         const gameOverScreen = document.getElementById('gameOverScreen');
         const questionText = document.getElementById('questionText');
+        const visualMath = document.getElementById('visualMath');
         const optionsContainer = document.getElementById('optionsContainer');
         const feedbackEl = document.getElementById('feedback');
         const scoreEl = document.getElementById('score');
         const totalQuestionsEl = document.getElementById('totalQuestions');
-        const currentLevelEl = document.getElementById('currentLevel');
         const finalScoreEl = document.getElementById('finalScore');
         const resultMessageEl = document.getElementById('resultMessage');
         const soundToggle = document.getElementById('soundToggle');
+        const timerEl = document.getElementById('timer');
+        const progressBar = document.getElementById('progressBar');
+        const character = document.getElementById('character');
+        const celebration = document.getElementById('celebration');
+        const achievementBadge = document.getElementById('achievementBadge');
+        const hintBtn = document.getElementById('hintBtn');
+        const hintContainer = document.getElementById('hintContainer');
+        const hintCountEl = document.getElementById('hintCount');
+        const starsContainer = document.getElementById('starsContainer');
+        const finalStars = document.getElementById('finalStars');
+        const totalStarsEl = document.getElementById('totalStars');
+        const statCorrect = document.getElementById('statCorrect');
+        const statTime = document.getElementById('statTime');
+        const statHints = document.getElementById('statHints');
+        const statStars = document.getElementById('statStars');
         
         // Audio elements
         const correctSound = document.getElementById('correctSound');
@@ -363,6 +873,7 @@
         const levelUpSound = document.getElementById('levelUpSound');
         const gameOverSound = document.getElementById('gameOverSound');
         const clickSound = document.getElementById('clickSound');
+        const celebrationSound = document.getElementById('celebrationSound');
         
         // Initialize game
         function init() {
@@ -377,17 +888,83 @@
                 });
             });
             
+            // Instructions button
+            document.getElementById('instructionsBtn').addEventListener('click', () => {
+                playSound(clickSound);
+                showScreen(instructionsScreen);
+            });
+            
+            // Customize button
+            document.getElementById('customizeBtn').addEventListener('click', () => {
+                playSound(clickSound);
+                showScreen(customizeScreen);
+            });
+            
+            // Rewards button
+            document.getElementById('rewardsBtn').addEventListener('click', () => {
+                playSound(clickSound);
+                totalStarsEl.textContent = totalStars;
+                showScreen(rewardsScreen);
+            });
+            
+            // Back to menu buttons
+            document.getElementById('backToMenuBtn').addEventListener('click', () => {
+                playSound(clickSound);
+                showScreen(menuScreen);
+            });
+            
+            document.getElementById('backToMenuBtn2').addEventListener('click', () => {
+                playSound(clickSound);
+                showScreen(menuScreen);
+            });
+            
+            document.getElementById('backToMenuBtn3').addEventListener('click', () => {
+                playSound(clickSound);
+                showScreen(menuScreen);
+            });
+            
             // Play again button
             document.getElementById('playAgainBtn').addEventListener('click', () => {
                 playSound(clickSound);
+                startGame();
+            });
+            
+            // Menu button
+            document.getElementById('menuBtn').addEventListener('click', () => {
+                playSound(clickSound);
                 showScreen(menuScreen);
+            });
+            
+            // Hint button
+            hintBtn.addEventListener('click', showHint);
+            
+            // Avatar selection
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    character.textContent = option.dataset.avatar;
+                });
+            });
+            
+            // Color theme selection
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    
+                    // Change theme color
+                    document.documentElement.style.setProperty('--primary-color', option.dataset.color);
+                    document.querySelectorAll('.btn').forEach(btn => {
+                        btn.style.backgroundColor = option.dataset.color;
+                    });
+                });
             });
             
             // Sound toggle
             soundToggle.addEventListener('click', () => {
                 soundEnabled = !soundEnabled;
                 soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
-                // Save preference to localStorage
                 localStorage.setItem('mathGameSoundEnabled', soundEnabled);
             });
             
@@ -409,29 +986,61 @@
             levelUpSound.volume = 0.7;
             gameOverSound.volume = 0.7;
             clickSound.volume = 0.7;
-            
-            // Load and pause to preload
-            correctSound.load();
-            wrongSound.load();
-            levelUpSound.load();
-            gameOverSound.load();
-            clickSound.load();
+            celebrationSound.volume = 0.7;
         }
         
         // Start the game
         function startGame() {
             score = 0;
             currentQuestion = 0;
+            stars = 0;
+            hintsLeft = 3;
+            timeLeft = 60;
             scoreEl.textContent = score;
-            currentLevelEl.textContent = level;
+            hintCountEl.textContent = hintsLeft;
+            startTime = Date.now();
+            updateStars();
+            
+            // Reset achievements
+            achievements = {
+                perfectScore: false,
+                speedRun: false,
+                noHintsUsed: false
+            };
+            
             showScreen(gameScreen);
+            startTimer();
             generateQuestion();
+        }
+        
+        // Start the countdown timer
+        function startTimer() {
+            clearInterval(timer);
+            timerEl.textContent = timeLeft;
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                
+                // Change character expression based on time
+                if (timeLeft < 10) {
+                    character.textContent = "😰";
+                } else if (timeLeft < 30) {
+                    character.textContent = "😟";
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    endGame();
+                }
+            }, 1000);
         }
         
         // Generate a question based on level
         function generateQuestion() {
             feedbackEl.textContent = '';
             feedbackEl.className = 'feedback';
+            hintContainer.style.display = 'none';
             
             let num1, num2, operation, question;
             
@@ -453,36 +1062,40 @@
                     break;
                     
                 case 3: // Addition and subtraction
-                    num1 = Math.floor(Math.random() * 15) + 1;
-                    num2 = Math.floor(Math.random() * 15) + 1;
                     operation = Math.random() > 0.5 ? '+' : '-';
                     
                     if (operation === '+') {
+                        num1 = Math.floor(Math.random() * 15) + 1;
+                        num2 = Math.floor(Math.random() * 15) + 1;
                         correctAnswer = num1 + num2;
                         question = `${num1} + ${num2} = ?`;
                     } else {
-                        // Ensure no negative answers
-                        if (num1 < num2) [num1, num2] = [num2, num1];
+                        // Ensure no negative answers by making num1 larger than num2
+                        num1 = Math.floor(Math.random() * 15) + 1;
+                        num2 = Math.floor(Math.random() * num1) + 1;
                         correctAnswer = num1 - num2;
                         question = `${num1} - ${num2} = ?`;
                     }
                     break;
                     
                 case 4: // All operations
-                    num1 = Math.floor(Math.random() * 12) + 1;
-                    num2 = Math.floor(Math.random() * 12) + 1;
                     const operations = ['+', '-', '×'];
                     operation = operations[Math.floor(Math.random() * operations.length)];
                     
                     if (operation === '+') {
+                        num1 = Math.floor(Math.random() * 12) + 1;
+                        num2 = Math.floor(Math.random() * 12) + 1;
                         correctAnswer = num1 + num2;
                         question = `${num1} + ${num2} = ?`;
                     } else if (operation === '-') {
                         // Ensure no negative answers
-                        if (num1 < num2) [num1, num2] = [num2, num1];
+                        num1 = Math.floor(Math.random() * 12) + 1;
+                        num2 = Math.floor(Math.random() * num1) + 1;
                         correctAnswer = num1 - num2;
                         question = `${num1} - ${num2} = ?`;
                     } else {
+                        num1 = Math.floor(Math.random() * 12) + 1;
+                        num2 = Math.floor(Math.random() * 12) + 1;
                         correctAnswer = num1 * num2;
                         question = `${num1} × ${num2} = ?`;
                     }
@@ -490,7 +1103,60 @@
             }
             
             questionText.textContent = question;
+            generateVisualMath(num1, num2, operation);
             generateOptions();
+            
+            // Update progress bar
+            progressBar.style.width = `${(currentQuestion / maxQuestions) * 100}%`;
+        }
+        
+        // Generate visual representation of the math problem
+        function generateVisualMath(num1, num2, operation) {
+            visualMath.innerHTML = '';
+            
+            // Map operation symbols
+            const opSymbols = {
+                '+': '+',
+                '-': '-',
+                '×': '×'
+            };
+            
+            // Create visual elements for the first number
+            for (let i = 0; i < num1; i++) {
+                const elem = document.createElement('div');
+                elem.className = 'math-object';
+                elem.textContent = '🔵';
+                visualMath.appendChild(elem);
+            }
+            
+            // Add operation symbol
+            const opElem = document.createElement('div');
+            opElem.className = 'math-object';
+            opElem.textContent = opSymbols[operation];
+            opElem.style.fontSize = '2.5rem';
+            visualMath.appendChild(opElem);
+            
+            // Create visual elements for the second number
+            for (let i = 0; i < num2; i++) {
+                const elem = document.createElement('div');
+                elem.className = 'math-object';
+                elem.textContent = '🔵';
+                visualMath.appendChild(elem);
+            }
+            
+            // Add equals sign
+            const equalsElem = document.createElement('div');
+            equalsElem.className = 'math-object';
+            equalsElem.textContent = '=';
+            equalsElem.style.fontSize = '2.5rem';
+            visualMath.appendChild(equalsElem);
+            
+            // Add question mark
+            const questionElem = document.createElement('div');
+            questionElem.className = 'math-object';
+            questionElem.textContent = '?';
+            questionElem.style.fontSize = '2.5rem';
+            visualMath.appendChild(questionElem);
         }
         
         // Generate options for the current question
@@ -505,7 +1171,7 @@
                 const wrongAnswer = correctAnswer + variation;
                 
                 // Ensure wrong answers are positive and not duplicates
-                if (wrongAnswer > 0 && !options.includes(wrongAnswer)) {
+                if (wrongAnswer > 0 && wrongAnswer !== correctAnswer && !options.includes(wrongAnswer)) {
                     options.push(wrongAnswer);
                 }
             }
@@ -524,6 +1190,31 @@
             });
         }
         
+        // Show a hint for the current question
+        function showHint() {
+            if (hintsLeft <= 0) return;
+            
+            playSound(clickSound);
+            hintsLeft--;
+            hintCountEl.textContent = hintsLeft;
+            
+            // Disable hint button if no hints left
+            if (hintsLeft <= 0) {
+                hintBtn.disabled = true;
+                hintBtn.style.opacity = '0.5';
+            }
+            
+            // Show hint
+            hintContainer.style.display = 'block';
+            hintContainer.innerHTML = `
+                <p><i class="fas fa-lightbulb" style="color: #ff9800;"></i> 
+                Try selecting ${correctAnswer}. Count the circles if you need help!</p>
+            `;
+            
+            // Track achievement
+            achievements.noHintsUsed = false;
+        }
+        
         // Check if the selected answer is correct
         function checkAnswer(selectedAnswer) {
             playSound(clickSound);
@@ -540,10 +1231,33 @@
                 feedbackEl.textContent = 'Correct! Well done!';
                 feedbackEl.className = 'feedback correct';
                 playSound(correctSound);
+                
+                // Add time bonus for quick answers
+                if (timeLeft > 40) {
+                    timeLeft += 5;
+                    timerEl.textContent = timeLeft;
+                    feedbackEl.textContent += ' +5 time bonus!';
+                }
+                
+                // Add star for correct answer
+                stars++;
+                totalStars++;
+                updateStars();
+                
+                // Happy character
+                character.textContent = "😄";
+                
+                // Celebration for perfect answers
+                if (stars % 3 === 0) {
+                    createCelebration();
+                }
             } else {
                 feedbackEl.textContent = `Oops! The answer was ${correctAnswer}`;
                 feedbackEl.className = 'feedback incorrect';
                 playSound(wrongSound);
+                
+                // Sad character
+                character.textContent = "😢";
             }
             
             // Move to next question or end game
@@ -555,14 +1269,110 @@
             }
         }
         
+        // Update stars display
+        function updateStars() {
+            starsContainer.innerHTML = '';
+            for (let i = 0; i < stars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.innerHTML = '<i class="fas fa-star"></i>';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Create celebration animation
+        function createCelebration() {
+            playSound(celebrationSound);
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+                
+                // Add keyframes for fall animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        to {
+                            transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                celebration.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+            
+            // Show achievement if applicable
+            if (stars === 5) {
+                showAchievement("Star Collector!");
+            } else if (stars === 10) {
+                showAchievement("Math Master!");
+            }
+        }
+        
+        // Show achievement badge
+        function showAchievement(text) {
+            achievementBadge.textContent = text;
+            achievementBadge.classList.add('badge-show');
+            
+            setTimeout(() => {
+                achievementBadge.classList.remove('badge-show');
+            }, 3000);
+        }
+        
         // End the game and show results
         function endGame() {
+            clearInterval(timer);
+            
             finalScoreEl.textContent = score;
+            
+            // Set final stars
+            finalStars.innerHTML = '';
+            for (let i = 0; i < stars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.innerHTML = '<i class="fas fa-star"></i>';
+                finalStars.appendChild(star);
+            }
+            
+            // Calculate time spent
+            const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+            
+            // Update stats
+            statCorrect.textContent = `${score}/${maxQuestions}`;
+            statTime.textContent = `${timeSpent}s`;
+            statHints.textContent = 3 - hintsLeft;
+            statStars.textContent = stars;
+            
+            // Check achievements
+            if (score === maxQuestions) {
+                achievements.perfectScore = true;
+            }
+            
+            if (timeLeft > 30) {
+                achievements.speedRun = true;
+            }
+            
+            if (hintsLeft === 3) {
+                achievements.noHintsUsed = true;
+            }
             
             // Set message based on score
             if (score === maxQuestions) {
-                resultMessageEl.textContent = 'Perfect! You\'re a math superstar!';
+                resultMessageEl.textContent = 'Perfect! You\'re a math superstar! 🌟';
                 resultMessageEl.style.color = '#2e7d32';
+                
+                // Show special celebration for perfect score
+                createCelebration();
+                showAchievement("Perfect Score!");
             } else if (score >= maxQuestions * 0.7) {
                 resultMessageEl.textContent = 'Great job! You\'re doing excellent!';
                 resultMessageEl.style.color = '#42a5f5';
@@ -574,6 +1384,19 @@
                 resultMessageEl.style.color = '#f44336';
             }
             
+            // Add achievement messages
+            if (achievements.perfectScore) {
+                resultMessageEl.innerHTML += '<br><i class="fas fa-trophy"></i> Perfect Score Achievement!';
+            }
+            
+            if (achievements.speedRun) {
+                resultMessageEl.innerHTML += '<br><i class="fas fa-bolt"></i> Speed Runner Achievement!';
+            }
+            
+            if (achievements.noHintsUsed) {
+                resultMessageEl.innerHTML += '<br><i class="fas fa-lightbulb"></i> No Hints Used Achievement!';
+            }
+            
             playSound(gameOverSound);
             showScreen(gameOverScreen);
         }
@@ -581,6 +1404,9 @@
         // Show a specific screen
         function showScreen(screen) {
             menuScreen.classList.remove('active');
+            instructionsScreen.classList.remove('active');
+            customizeScreen.classList.remove('active');
+            rewardsScreen.classList.remove('active');
             gameScreen.classList.remove('active');
             gameOverScreen.classList.remove('active');
             
@@ -590,26 +1416,10 @@
         // Play a sound if enabled
         function playSound(sound) {
             if (soundEnabled) {
-                try {
-                    sound.currentTime = 0;
-                    const playPromise = sound.play();
-                    
-                    if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            console.log("Audio play failed:", error);
-                            // Try to handle the autoplay restriction
-                            if (error.name === 'NotAllowedError') {
-                                // User interaction is needed to play audio
-                                document.addEventListener('click', function userInteraction() {
-                                    sound.play().catch(e => console.log("Still can't play audio:", e));
-                                    document.removeEventListener('click', userInteraction);
-                                }, { once: true });
-                            }
-                        });
-                    }
-                } catch (error) {
-                    console.log("Error playing sound:", error);
-                }
+                sound.currentTime = 0;
+                sound.play().catch(e => {
+                    console.log("Audio play failed:", e);
+                });
             }
         }
         
@@ -618,6 +1428,3 @@
     </script>
 </body>
 </html>
-
-
-
